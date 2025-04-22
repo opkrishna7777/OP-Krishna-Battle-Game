@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Krishna OP Battle Game</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; background-color: #f2f2f2; padding: 20px; }
+    h1 { color: #333; }
+    #log { margin-top: 20px; border: 1px solid #ccc; padding: 10px; height: 200px; overflow-y: scroll; background: white; }
+    button { font-size: 18px; padding: 10px 20px; margin: 10px; cursor: pointer; background-color: orange; border: none; border-radius: 5px; color: white; }
+  </style>
+</head>
+<body>
+
+<h1>Krishna OP Battle Game</h1>
+<p>Your Health: <span id="playerHealth">100</span></p>
+<p>Enemy Health: <span id="enemyHealth">100</span></p>
+<button onclick="attack()">Attack</button>
+<div id="log"></div>
+
+<script>
+let playerHealth = 100;
+let enemyHealth = 100;
+
+function attack() {
+  if (playerHealth <= 0 || enemyHealth <= 0) return;
+
+  let playerHit = Math.floor(Math.random() * 11) + 10;
+  let enemyHit = Math.floor(Math.random() * 11) + 5;
+
+  enemyHealth -= playerHit;
+  playerHealth -= enemyHit;
+
+  if (enemyHealth < 0) enemyHealth = 0;
+  if (playerHealth < 0) playerHealth = 0;
+
+  document.getElementById('playerHealth').textContent = playerHealth;
+  document.getElementById('enemyHealth').textContent = enemyHealth;
+
+  let log = document.getElementById('log');
+  log.innerHTML += `You hit enemy for ${playerHit}. Enemy hits you for ${enemyHit}.<br>`;
+  
+  if (enemyHealth === 0) {
+    log.innerHTML += "<b>You won the battle!</b><br>";
+  } else if (playerHealth === 0) {
+    log.innerHTML += "<b>You lost the battle!</b><br>";
+  }
+
+  log.scrollTop = log.scrollHeight;
+}
+</script>
+
+</body>
+</html>
